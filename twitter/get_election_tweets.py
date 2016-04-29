@@ -1,19 +1,16 @@
 # The Following Script will download the twitter stream
 # and store it in a SQLite database which has already been created 
 from __future__ import division, print_function
-import tweepy
-import sqlite3
+import tweepy, sqlite3
 from datetime import datetime
 
 # database interface
 # The Following script creates the database where we will store tweets
-conn = sqlite3.connect('tweets_NYbox.db')
+conn = sqlite3.connect('data/tweets_NYbox.db')
 curs = conn.cursor()
 curs.execute("CREATE TABLE IF NOT EXISTS tweets (tid integer, username text, created_at text, content text, location text, source text, geotype text, geolat real, geolong real)")
 
-#import sqlite3
-#conn = sqlite3.connect('tweets_test.db')
-#curs = conn.cursor()
+
 def stripit(x):
 	try:
 		return x.strip()
@@ -58,7 +55,7 @@ class StreamWatcherHandler(tweepy.StreamListener):
  
 def main():
 	# establish stream
-	with open('twitter_pwd.csv','r') as f:
+	with open('../keys/twitterKey.csv','r') as f:
 		(consumer_key, consumer_secret, access_token, access_token_secret) = \
 			f.read().strip().split(",")
 	auth1 = tweepy.auth.OAuthHandler(consumer_key, consumer_secret)

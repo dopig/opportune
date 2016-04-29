@@ -40,5 +40,5 @@ def getFromSql(sqlDBfile, csv_name):
 	return(df)
 
 if __name__ == '__main__':
-	getFromSql('tweets_NYbox.db', 'tweets_0426.csv')
+	getFromSql('data/tweets_NYbox.db', 'data/tweets_0426.csv')
 
