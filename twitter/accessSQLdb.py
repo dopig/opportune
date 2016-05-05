@@ -9,6 +9,11 @@ def cleanText(text):
     return re.sub( '\s+', ' ', text).strip()  #This removes excess spaces
 
 def getFromSql(sqlDBfile, csv_name):
+	'''Loads csv_name (csv) if it already exists,
+	otherwise opens sqlDBfile (sql) and creates csv_name.
+	Either way, passes back a csv.'''
+
+
 	if not os.path.exists(csv_name):
 		#If CSV doesn't exist, connect to DB.
 		conn = sqlite3.connect(sqlDBfile)

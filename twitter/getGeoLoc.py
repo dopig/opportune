@@ -4,7 +4,12 @@ import geopy, pickle, time, accessSQLdb, os.path
 from geopy.geocoders import Nominatim
 from geopy.exc import GeocoderTimedOut
 
+#This file looks through the tweets of interest, evaluates if they have GPS 
+#coordinates.  In order to save time (and not annoy the API hosts), make a dictionary
+#of all gps->address look ups and pickle it.
+
 def save_dict(locsDict, pkl_filename, final = True):
+	#Pickle the dictionary.
 	if not final:
 		pkl_filename += 'INCOMPLETE'
 	with open(pkl_filename, 'w') as f:
@@ -21,7 +26,7 @@ def makeGeoDict(gps_set, geodict, gpsPklFilename):
 			geodict[gps_tuple] = geolocator.reverse(str(gps_tuple)[1:-1]).address
 			time.sleep(1)
 			if ((i+1)%50 == 0):
-				print("Checked %4d (%4.1f%%) so far." %((i+1),((i+1)/len(gps_set))))
+				print("Checked %4d (%4.1f%%) so far." %((i+1),(100*(i+1)/len(gps_set))))
 				save_dict(geodict, gpsPklFilename, final = False)
 
 		except GeocoderTimedOut as e:
