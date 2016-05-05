@@ -5,7 +5,6 @@ The DMV project focuses on analyzing the locations of DMV offices in states
 that require voter ID.  Do some states place more or less of a burden on their
 citizens who are looking for IDs?
 
-Files:
 ####getDMVs.py
 Scrapes data from state DMV websites and uses geopy to get gps
 coordinates for all offices.
