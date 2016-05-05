@@ -140,13 +140,13 @@ def getDMVsIN():
             sen = re.search(r'The (.+) [lL]icense [Bb]ranch( is)? at (.*)', sen)
 
             if sen:
-                print(sen.group(1,3))
+                #print(sen.group(1,3))
                 officeName = sen.group(1)
                 street = re.sub('(,|\xa0).*','', sen.group(3))
                 rex = r' (- .*|AAA|North|South|East|West)$' #Remove these to get city name
                 city = 'Indianapolis' if county == 'Marion' else re.sub(rex, '', officeName)
                 (latitude, longitude, zipCode, _) = getGeo(street, city, state, "")
-                officeList.append((officeName, street, city, zipCode, county, state, latitude, longitude))
+                officeList.append((officeName, street, city, zipCode, county+' County', state, latitude, longitude))
 
     df = pd.DataFrame(officeList, columns = defaultColumns)
     return df
@@ -260,7 +260,7 @@ def getDMVsGA():
             [c.text.strip() for c in center.find_all('td')]
         street = parseStreet(streetRaw)
         (latitude, longitude, _, _) = getGeo(street, city, state, zipCode)
-        dmvList.append([officeName, street, city, zipCode, county, state, latitude, longitude])
+        dmvList.append([officeName, street, city, zipCode, county+' County', state, latitude, longitude])
         #print(officeName, street, city, zipCode, county, state, latitude, longitude)
     df = pd.DataFrame(dmvList, columns=defaultColumns)
 
@@ -342,6 +342,7 @@ def getDmv(state, save = True):
         if save == True:
             df.to_csv(fileLink, encoding = 'utf-8')
 
+    print('\a') #Beep
     return df
     
 
